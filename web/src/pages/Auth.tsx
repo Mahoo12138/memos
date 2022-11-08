@@ -30,8 +30,8 @@ const Auth = () => {
       const { data: status } = data;
       setSystemStatus(status);
       if (status.profile.mode === "dev") {
-        setEmail("demo@usememos.com");
-        setPassword("secret");
+        setEmail("mahoo12138@qq.com");
+        setPassword("xm12345678");
       }
       pageLoadingState.setFinish();
     });
