@@ -17,12 +17,11 @@ interface Props {
   placeholder: string;
   fullscreen: boolean;
   tools?: ReactNode;
-  onPaste: (event: React.ClipboardEvent) => void;
   onContentChange: (content: string) => void;
+  onPaste: (event: React.ClipboardEvent) => void;
 }
 
-// eslint-disable-next-line react/display-name
-const Editor = forwardRef((props: Props, ref: React.ForwardedRef<EditorRefActions>) => {
+const Editor = forwardRef(function Editor(props: Props, ref: React.ForwardedRef<EditorRefActions>) {
   const { className, initialContent, placeholder, fullscreen, onPaste, onContentChange: handleContentChangeCallback } = props;
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const refresh = useRefresh();
