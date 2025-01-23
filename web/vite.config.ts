@@ -20,20 +20,20 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3001,
-    proxy: {
-      "^/api": {
-        target: devProxyServer,
-        xfwd: true,
-      },
-      "^/memos.api.v1": {
-        target: devProxyServer,
-        xfwd: true,
-      },
-      "^/file": {
-        target: devProxyServer,
-        xfwd: true,
-      },
-    },
+    // proxy: {
+    //   "^/api": {
+    //     target: devProxyServer,
+    //     xfwd: true,
+    //   },
+    //   "^/memos.api.v1": {
+    //     target: devProxyServer,
+    //     xfwd: true,
+    //   },
+    //   "^/file": {
+    //     target: devProxyServer,
+    //     xfwd: true,
+    //   },
+    // },
   },
   resolve: {
     alias: {

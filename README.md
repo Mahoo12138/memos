@@ -10,7 +10,7 @@ An open-source, self-hosted note-taking solution designed for seamless deploymen
 
 + 使用 docker 部署你的 memos 实例；
 + 然后将 `http://localhost:5230` 反向代理到 `https://memos.yourdomain.com`；
-+ 然后部署到 Vercel，配置环境变量 `API_HOST` 为 `https://memos.yourdomain.com`；
++ 然后部署到 Vercel，配置环境变量 `VITE_API_HOST` 为 `https://memos.yourdomain.com`；
 
 
 <a href="https://www.usememos.com">Home Page</a> •
