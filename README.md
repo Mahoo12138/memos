@@ -1,8 +1,17 @@
 # Memos - Open Source, Self-hosted, Your Notes, Your Way
 
+
+
 <img align="right" height="96px" src="https://www.usememos.com/logo-rounded.png" alt="Memos" />
 
 An open-source, self-hosted note-taking solution designed for seamless deployment and multi-platform access. Experience effortless plain text writing with pain-free, complemented by robust Markdown syntax support for enhanced formatting.
+
+## Notice
+
++ 使用 docker 部署你的 memos 实例；
++ 然后将 `http://localhost:5230` 反向代理到 `https://memos.yourdomain.com`；
++ 然后部署到 Vercel，配置环境变量 `API_HOST` 为 `https://memos.yourdomain.com`；
+
 
 <a href="https://www.usememos.com">Home Page</a> •
 <a href="https://www.usememos.com/blog">Blogs</a> •
