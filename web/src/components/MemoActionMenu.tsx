@@ -101,7 +101,7 @@ const MemoActionMenu = (props: Props) => {
   };
 
   const handleCopyLink = () => {
-    copy(`${window.location.origin}/m/${memo.uid}`);
+    copy(`${import.meta.env.VITE_API_HOST || window.location.origin}/m/${memo.uid}`);
     toast.success(t("message.succeed-copy-link"));
   };
 
