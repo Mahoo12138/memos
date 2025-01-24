@@ -17,6 +17,9 @@ export default defineConfig({
       bundler: "vite",
     }),
   ],
+  define: {
+    VITE_API_HOST: JSON.stringify(process.env.VITE_API_HOST)
+  },
   server: {
     host: "0.0.0.0",
     port: 3001,
