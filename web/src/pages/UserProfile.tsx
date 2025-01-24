@@ -72,7 +72,7 @@ const UserProfile = () => {
       return;
     }
 
-    copy(`${window.location.origin}/u/${encodeURIComponent(user.username)}`);
+    copy(`${import.meta.env.VITE_API_HOST || window.location.origin}/u/${encodeURIComponent(user.username)}`);
     toast.success(t("message.copied"));
   };
 
