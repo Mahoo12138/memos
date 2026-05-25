@@ -1,4 +1,5 @@
 import { toBlob } from "html-to-image";
+import { apiBaseUrl } from "@/helpers/api";
 
 const WINDOW_HORIZONTAL_MARGIN = 32;
 const PREVIEW_HORIZONTAL_PADDING_IN_DIALOG = 40;
@@ -24,7 +25,8 @@ const isExportableImageUrl = (value?: string) => {
   }
 
   try {
-    return new URL(value, window.location.origin).origin === window.location.origin;
+    const origin = new URL(value, window.location.origin).origin;
+    return origin === window.location.origin || origin === apiBaseUrl;
   } catch {
     return false;
   }

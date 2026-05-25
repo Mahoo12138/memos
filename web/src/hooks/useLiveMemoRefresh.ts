@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { getAccessToken } from "@/auth-state";
 import { useAuth } from "@/contexts/AuthContext";
+import { apiBaseUrl } from "@/helpers/api";
 import { memoKeys } from "@/hooks/useMemoQueries";
 import { userKeys } from "@/hooks/useUserQueries";
 
@@ -96,7 +97,7 @@ export function useLiveMemoRefresh() {
       abortControllerRef.current = abortController;
 
       try {
-        const response = await fetch("/api/v1/sse", {
+        const response = await fetch(`${apiBaseUrl}/api/v1/sse`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

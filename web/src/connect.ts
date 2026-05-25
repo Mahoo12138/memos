@@ -1,7 +1,19 @@
 import { timestampDate } from "@bufbuild/protobuf/wkt";
-import { Code, ConnectError, createClient, type Interceptor } from "@connectrpc/connect";
+import {
+  Code,
+  ConnectError,
+  createClient,
+  type Interceptor,
+} from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-web";
-import { getAccessToken, hasStoredToken, isTokenExpired, REQUEST_TOKEN_EXPIRY_BUFFER_MS, setAccessToken } from "./auth-state";
+import {
+  getAccessToken,
+  hasStoredToken,
+  isTokenExpired,
+  REQUEST_TOKEN_EXPIRY_BUFFER_MS,
+  setAccessToken,
+} from "./auth-state";
+import { apiBaseUrl } from "./helpers/api";
 import { AIService } from "./types/proto/api/v1/ai_service_pb";
 import { AttachmentService } from "./types/proto/api/v1/attachment_service_pb";
 import { AuthService } from "./types/proto/api/v1/auth_service_pb";
@@ -60,10 +72,9 @@ const fetchWithCredentials: typeof globalThis.fetch = (input, init) => {
     credentials: "include",
   });
 };
-
 // Separate transport without auth interceptor to prevent recursion
 const refreshTransport = createConnectTransport({
-  baseUrl: window.location.origin,
+  baseUrl: apiBaseUrl,
   useBinaryFormat: true,
   fetch: fetchWithCredentials,
   interceptors: [],
@@ -75,10 +86,15 @@ async function doRefreshAccessToken(): Promise<void> {
   const response = await refreshAuthClient.refreshToken({});
 
   if (!response.accessToken) {
-    throw new ConnectError("Refresh token response missing access token", Code.Internal);
+    throw new ConnectError(
+      "Refresh token response missing access token",
+      Code.Internal,
+    );
   }
 
-  const expiresAt = response.expiresAt ? timestampDate(response.expiresAt) : undefined;
+  const expiresAt = response.expiresAt
+    ? timestampDate(response.expiresAt)
+    : undefined;
   setAccessToken(response.accessToken, expiresAt);
 }
 
@@ -99,7 +115,10 @@ function setAuthorizationHeader(req: RequestWithHeader, token: string | null) {
   req.header.set("Authorization", `Bearer ${token}`);
 }
 
-function shouldHandleUnauthenticatedRetry(error: unknown, isRetryAttempt: boolean): boolean {
+function shouldHandleUnauthenticatedRetry(
+  error: unknown,
+  isRetryAttempt: boolean,
+): boolean {
   if (!(error instanceof ConnectError)) {
     return false;
   }
@@ -116,7 +135,10 @@ async function refreshAndGetAccessToken(): Promise<string> {
   await refreshAccessToken();
   const token = getAccessToken();
   if (!token) {
-    throw new ConnectError("Token refresh succeeded but no token available", Code.Internal);
+    throw new ConnectError(
+      "Token refresh succeeded but no token available",
+      Code.Internal,
+    );
   }
   return token;
 }
@@ -182,7 +204,7 @@ const authInterceptor: Interceptor = (next) => async (req) => {
 // ============================================================================
 
 const transport = createConnectTransport({
-  baseUrl: window.location.origin,
+  baseUrl: apiBaseUrl,
   useBinaryFormat: true,
   fetch: fetchWithCredentials,
   interceptors: [authInterceptor],
@@ -195,9 +217,15 @@ export const userServiceClient = createClient(UserService, transport);
 
 // Content service clients
 export const memoServiceClient = createClient(MemoService, transport);
-export const attachmentServiceClient = createClient(AttachmentService, transport);
+export const attachmentServiceClient = createClient(
+  AttachmentService,
+  transport,
+);
 export const aiServiceClient = createClient(AIService, transport);
 export const shortcutServiceClient = createClient(ShortcutService, transport);
 
 // Configuration service clients
-export const identityProviderServiceClient = createClient(IdentityProviderService, transport);
+export const identityProviderServiceClient = createClient(
+  IdentityProviderService,
+  transport,
+);

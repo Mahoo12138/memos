@@ -2,6 +2,7 @@ import { create } from "@bufbuild/protobuf";
 import { timestampFromDate } from "@bufbuild/protobuf/wkt";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { memoServiceClient } from "@/connect";
+import { apiBaseUrl } from "@/helpers/api";
 import type { Attachment } from "@/types/proto/api/v1/attachment_service_pb";
 import type { MemoShare } from "@/types/proto/api/v1/memo_service_pb";
 import {
@@ -96,6 +97,6 @@ export function getShareToken(share: MemoShare): string {
 export function withShareAttachmentLinks(attachments: Attachment[], token: string): Attachment[] {
   return attachments.map((a) => {
     if (a.externalLink) return a;
-    return { ...a, externalLink: `${window.location.origin}/file/${a.name}/${a.filename}?share_token=${encodeURIComponent(token)}` };
+    return { ...a, externalLink: `${apiBaseUrl}/file/${a.name}/${a.filename}?share_token=${encodeURIComponent(token)}` };
   });
 }

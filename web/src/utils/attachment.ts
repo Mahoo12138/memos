@@ -1,3 +1,4 @@
+import { apiBaseUrl } from "@/helpers/api";
 import { Attachment, MotionMediaFamily, MotionMediaRole } from "@/types/proto/api/v1/attachment_service_pb";
 
 export const getAttachmentUrl = (attachment: Attachment) => {
@@ -5,15 +6,15 @@ export const getAttachmentUrl = (attachment: Attachment) => {
     return attachment.externalLink;
   }
 
-  return `${window.location.origin}/file/${attachment.name}/${attachment.filename}`;
+  return `${apiBaseUrl}/file/${attachment.name}/${attachment.filename}`;
 };
 
 export const getAttachmentThumbnailUrl = (attachment: Attachment) => {
-  return `${window.location.origin}/file/${attachment.name}/${attachment.filename}?thumbnail=true`;
+  return `${apiBaseUrl}/file/${attachment.name}/${attachment.filename}?thumbnail=true`;
 };
 
 export const getAttachmentMotionClipUrl = (attachment: Attachment) => {
-  return `${window.location.origin}/file/${attachment.name}/${attachment.filename}?motion=true`;
+  return `${apiBaseUrl}/file/${attachment.name}/${attachment.filename}?motion=true`;
 };
 
 export const getAttachmentType = (attachment: Attachment) => {

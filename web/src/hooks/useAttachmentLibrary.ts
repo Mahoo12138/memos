@@ -7,6 +7,7 @@ import {
   isImageAttachment,
   isVideoAttachment,
 } from "@/components/MemoMetadata/Attachment/attachmentHelpers";
+import { apiBaseUrl } from "@/helpers/api";
 import { useInfiniteAttachments } from "@/hooks/useAttachmentQueries";
 import type { Attachment } from "@/types/proto/api/v1/attachment_service_pb";
 import { isMotionAttachment } from "@/utils/attachment";
@@ -81,7 +82,7 @@ const toLibraryListItem = (attachment: Attachment, locale: string): AttachmentLi
     fileTypeLabel,
     fileSizeLabel,
     memoName: attachment.memo,
-    sourceUrl: attachment.externalLink || `${window.location.origin}/file/${attachment.name}/${attachment.filename}`,
+    sourceUrl: attachment.externalLink || `${apiBaseUrl}/file/${attachment.name}/${attachment.filename}`,
   };
 };
 
