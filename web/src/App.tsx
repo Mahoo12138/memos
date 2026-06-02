@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useInstance } from "./contexts/InstanceContext";
 import { MemoFilterProvider } from "./contexts/MemoFilterContext";
+import { withApiBase } from "./helpers/api";
 import useNavigateTo from "./hooks/useNavigateTo";
 import { useUserLocale } from "./hooks/useUserLocale";
 import { useUserTheme } from "./hooks/useUserTheme";
@@ -53,7 +54,7 @@ const App = () => {
 
     document.title = instanceGeneralSetting.customProfile.title;
     const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-    link.href = instanceGeneralSetting.customProfile.logoUrl || "/logo.webp";
+    link.href = withApiBase(instanceGeneralSetting.customProfile.logoUrl) || "/logo.webp";
   }, [instanceGeneralSetting.customProfile]);
 
   return (

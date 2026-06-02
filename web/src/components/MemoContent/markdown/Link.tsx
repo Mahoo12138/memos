@@ -1,3 +1,4 @@
+import { withApiBase } from "@/helpers/api";
 import { cn } from "@/lib/utils";
 import type { ReactMarkdownProps } from "./types";
 
@@ -12,7 +13,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>, React
 export const Link = ({ children, className, href, node: _node, ...props }: LinkProps) => {
   return (
     <a
-      href={href}
+      href={href ? withApiBase(href) : href}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(

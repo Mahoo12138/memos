@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { authServiceClient, userServiceClient } from "@/connect";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInstance } from "@/contexts/InstanceContext";
+import { withApiBase } from "@/helpers/api";
 import useLoading from "@/hooks/useLoading";
 import useNavigateTo from "@/hooks/useNavigateTo";
 import { handleError } from "@/lib/error";
@@ -91,7 +92,11 @@ const SignUp = () => {
     <div className="py-4 sm:py-8 w-80 max-w-full min-h-svh mx-auto flex flex-col justify-start items-center">
       <div className="w-full py-4 grow flex flex-col justify-center items-center">
         <div className="w-full flex flex-row justify-center items-center mb-6">
-          <img className="h-14 w-auto rounded-full shadow" src={instanceGeneralSetting.customProfile?.logoUrl || "/logo.webp"} alt="" />
+          <img
+            className="h-14 w-auto rounded-full shadow"
+            src={withApiBase(instanceGeneralSetting.customProfile?.logoUrl) || "/logo.webp"}
+            alt=""
+          />
           <p className="ml-2 text-5xl text-foreground opacity-80">{instanceGeneralSetting.customProfile?.title || "Memos"}</p>
         </div>
         {canUsePasswordSignUp ? (
