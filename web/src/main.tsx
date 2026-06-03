@@ -25,6 +25,19 @@ import "katex/dist/katex.min.css";
 applyThemeEarly();
 applyLocaleEarly();
 
+// Silence harmless AbortError noise from @connectrpc/connect's setupSignal
+// cleanup. Connect aborts the linked AbortController after every call
+// completes (success or failure) to clean up timers/streams; in some
+// browser + credentials:"include" combinations this leaks as an
+// "Uncaught (in promise) AbortError" even though the response was returned
+// successfully. Real user-triggered aborts are still handled by callers.
+window.addEventListener("unhandledrejection", (event) => {
+  const reason = event.reason;
+  if (reason instanceof DOMException && reason.name === "AbortError") {
+    event.preventDefault();
+  }
+});
+
 // Inner component that initializes contexts
 function AppInitializer({ children }: { children: React.ReactNode }) {
   const { isInitialized: authInitialized, initialize: initAuth, currentUser } = useAuth();
